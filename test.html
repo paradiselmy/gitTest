@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="./angular.js"></script>
+	<body ng-app="angularDemo">
+		<div ng-controller="studentCtrl1">
+			<p>&yen;{{money}}</p>
+			<p>{{date|date:'yyyy-MM-dd hh:mm:ss EEEE'}}</p>
+		</div>
+		<div ng-controller="studentCtrl2">
+			<p>angular学习</p>
+			<p id="text">好好学习</p>
+			<p>{{text}}</p>
+			<input ng-model="text"  />
+		</div>
+		<!--用ng指令是因为在页面加载时，如果是用原生src写法，页面会先加载路径为{{imgUrl}}的图片，
+		但是{{imgUrl}}会报错，它是属于angular的写法，所以会先加载一个错误的图片，为了解决这个问题
+		要在src前面加一个ng-的前缀，但是原生js不识别，不读取，当angular指令触发后再执行-->
+		
+		<!--要从控制器传值到html页面，就在该加ng-的地方加ng-，不用传就用原生的方法-->
+	</body>
+	<script type="text/javascript">
+		console.log(angular);
+		document.getElementById("text").innerHTML = '123';
+		//module的服务就是一些我们用到的方法，他可以是对象
+		//用angular对象的module方法来创建名字为angularDemo的ng程序
+		
+		//ng==angular
+		
+		//第一步：创建一个angular.module('',[]);
+		//比如在<html>标签里面写ng-app，就会在这个html标签里面让angular程序生效
+		//在<body>标签里面写ng-app，这个angular程序就会在body标签里面生效
+		//第二步：在DOM页面里把名字赋给ng-app属性 ->ng-app="angularDemo"
+		//上面的写法就是为了定义这个angular程序的作用域
+		
+		var app = angular.module('angularDemo',[]);
+		console.log(app);
+		//$scope.name = '123';
+		//第三步：写一个控制器，控制器方法controller()需要传两个参数，一个是控制器的名字，一个是控制器所要执行的回调方法
+		//$scope:用$scope定义的变量，方法，对象等都只是在这个函数的范围内，生命周期就是所在的这个function函数内
+		app.controller('studentCtrl1',function($scope,$rootScope){
+			$scope.text = "123";
+			$scope.name = "paradise";
+			$scope.money = 10000000;
+			$scope.date = 1468783320000;//时间戳
+			$rootScope.change = $scope.text;
+			console.log($rootScope.change);
+		});
+		app.controller('studentCtrl2',function($scope){
+			$scope.text = "456";
+		});
+		//$rootScope是所有$scope的父元素，所有$scope都指向同一个$rootScope
+		//$scope只是控制器所在的作用域
+		//$rootScope可以在控制器之间传递数据
+		//要用$rootScope,需要在回调函数中传入$rootScope的服务
+		
+		//使用$rootScope
+		
+	</script>
+</html>
